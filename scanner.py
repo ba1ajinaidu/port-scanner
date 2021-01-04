@@ -4,12 +4,12 @@ from datetime import datetime
 import sys
 
 
-if len(sys.argv) == 2:
+if len(sys.argv) == 4:
 	target = socket.gethostbyname(sys.argv[1]) # Translate the hostname to IPv4
 
 else:
 	print("Invalid amount of arguements")
-	print("Usage: python3 scanner.py <ip/hostname>")
+	print("Usage: python3 scanner.py <ip/hostname> <lower port> <upper port>")
 
 #Add a banner
 
@@ -19,14 +19,13 @@ print("time started "+str(datetime.now()))
 print('-'*50)
 
 try:
-	for port in range (70,83):
+	for port in range (int(sys.argv[2]),int(sys.argv[3])):
 		s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		print(port)
 		socket.setdefaulttimeout(1)
 		result = s.connect_ex((target,port)) #returns a error indicator
 
 		if result == 0:
-			print("Found port {.} open",format(port))
+			print("Found port {0} open".format(port))
 
 		s.close
 
